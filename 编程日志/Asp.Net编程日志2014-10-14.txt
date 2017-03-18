@@ -1,0 +1,32 @@
+using if with eval("") in asp.net
+I am using repeater to display the news on the news section. In my news section i have got 2 labels(title, Description) and one image field. Below is the code which i am using to populate the repeater:
+
+<asp:Repeater ID="rptNews" runat="server">
+<ItemTemplate>
+<asp:Image ID="newsImage" runat="server" ImageUrl='<%#String.format("../Images/News/{0}", Eval("newsImage")) %>' />
+<asp:Label ID="newsTitle" runat="server" Text='<%#Eval("newsTitle") %>'></asp:Label>
+<br />
+<asp:Label ID="newsDescription" runat="server" Text='<%#Eval("newsDescription") %>'></asp:Label>
+<br />
+<div class="clear">&nbsp;</div>
+</ItemTemplate>
+
+</asp:Repeater>
+I want to use if statement with the , for instance if the Eval("newsImage") is null then i want to disable the image control and just show the title and description of news . Any suggestions on how to acheive this.
+
+should be like... Visible='<%# Eval("newsImage").ToString() != "Null" %>'
+
+<asp:Image ID="newsImage" runat="server" Visible='<%# Eval("newsImage").ToString() == "Null" %>'  ImageUrl='<%#String.format("../Images/News/{0}", Eval("newsImage")) %>' />
+Maybe you could add visible to the Image, like this:
+
+ <asp:Image ID="newsImage" runat="server" Visible='<%# Eval("newsImage").ToString().Length > 0 %>'  ImageUrl='<%#String.format("../Images/News/{0}", Eval("newsImage")) %>' />  
+If an image name exists then Visible will be true, otherwise false.
+
+If you want to check for null than you need check for DBNull.Value and not just null
+
+<asp:Image ID="newsImage" runat="server" Visible='<%# Eval("newsImage") != DBNull.Value %>'  ImageUrl='<%#String.format("../Images/News/{0}", Eval("newsImage")) %>' />  
+Add the Visible attribute to your Image tag:
+
+   Visible="<%# Eval("newsImage") != null %>"
+Although in such cases it might be better to use the ItemDataBound event, it's very easy to use.
+

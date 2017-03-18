@@ -1,0 +1,428 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <link rel="stylesheet" type="text/css" href="css/base.css" />
+    <link rel="stylesheet" type="text/css" href="css/text.css" />
+    <link href="assets/css/style.css" rel="stylesheet" />
+    <style type="text/css">
+        #main1
+        {
+            width: 309px;
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+            margin: 20px auto;
+        }
+        #main1 .box
+        {
+            width: 309px;
+            height: 300px;
+            box-shadow: 0px 0px 5px #ddd;
+            margin: 0px auto;
+            overflow: hidden;
+            position: relative;
+        }
+        #main1 .box img
+        {
+            width: 309px;
+            height: 300px;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            opacity: 0;
+            filter: alpha(opacity=0);
+        }
+        #main1 .btnLeft
+        {
+            width: 35px;
+            height: 57px;
+            position: absolute;
+            left: 0px;
+            top: 115px;
+            background: url(../images/left_ar.png) no-repeat 0px 0px;
+        }
+        #main1 .btnRight
+        {
+            width: 35px;
+            height: 57px;
+            position: absolute;
+            right: 0px;
+            top: 115px;
+            background: url(../images/right_ar.png) no-repeat 0px 0px;
+        }
+        #main1 .page
+        {
+            width: 132px;
+            height: 22px;
+            position: absolute;
+            bottom: 0px;
+            right: 0px;
+        }
+        #main1 .page a
+        {
+            display: inline-block;
+            width: 22px;
+            height: 22px;
+            background: url(../images/num_grey.png) no-repeat 0px 0px;
+            margin: 0px 11px;
+            float: left;
+            color: #FFF;
+            text-decoration: none;
+            text-align: center;
+        }
+        #main1 .page a.active
+        {
+            background: url(../images/num_red.png) no-repeat 0px 0px;
+        }
+    </style>
+    <style type="text/css">
+        body
+        {
+            background: url(../images/blog7year_videobg.png);
+        }
+        .actGotop
+        {
+            position: fixed;
+            _position: absolute;
+            bottom: 100px;
+            right: 50px;
+            width: 150px;
+            height: 195px;
+            display: none;
+        }
+        .actGotop a, .actGotop a:link
+        {
+            width: 150px;
+            height: 195px;
+            display: inline-block;
+            background: url(../images/blog7year_gotop.png) no-repeat;
+            _background: url(../images/blog7year_gotop.gif) no-repeat;
+            outline: none;
+        }
+        .actGotop a:hover
+        {
+            width: 150px;
+            height: 195px;
+            background: url(../images/blog7year_gotopd.gif) no-repeat;
+            outline: none;
+        }
+        .style1
+        {
+            height: 26px;
+        }
+    </style>
+</head>
+<body>
+    <div class="actGotop">
+        <a href="javascript:;" title="Top"></a>
+    </div>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $(window).scroll(function () {
+                if ($(window).scrollTop() >= 100) {
+                    $('.actGotop').fadeIn(300);
+                } else {
+                    $('.actGotop').fadeOut(300);
+                }
+            });
+            $('.actGotop').click(function () { $('html,body').animate({ scrollTop: '0px' }, 800); });
+
+        });
+    </script>
+    <script type="text/javascript" src="../js/jquery.js"></script>
+    <script type="text/javascript">
+        $(function () {
+
+            var aPage = $('#main1 .page a'); 	//分页按钮
+            var aImg = $('#main1 .box img'); 	//图像集合
+            var iSize = aImg.size(); 	//图像个数
+            var index = 0; 	//切换索引
+            var t;
+            $('#btnLeft').click(function () {		//左边按钮点击
+                index--;
+                if (index < 0) {
+                    index = iSize - 1
+                }
+                change(index)
+            })
+            $('#btnRight').click(function () {    //右边按钮点击
+                index++;
+                if (index > iSize - 1) {
+                    index = 0
+                }
+                change(index)
+            })
+            //分页按钮点击
+            aPage.click(function () {
+                index = $(this).index();
+                change(index)
+            });
+            //切换过程
+            function change(index) {
+                aPage.removeClass('active');
+                aPage.eq(index).addClass('active');
+                aImg.stop();
+                //隐藏除了当前元素，所以图像
+                aImg.eq(index).siblings().animate({
+                    opacity: 0
+                }, 1000)
+                //显示当前图像
+                aImg.eq(index).animate({
+                    opacity: 1
+                }, 1000)
+            }
+
+
+            function autoshow() {
+                index = index + 1;
+                if (index <= iSize - 1) {
+                    change(index);
+                } else {
+                    index = 0;
+                    change(index);
+                }
+
+            }
+            int = setInterval(autoshow, 3000);
+            function clearInt() {
+                $('#btnLeft,#btnRight,.page a').mouseover(function () {
+                    clearInterval(int);
+                })
+
+            }
+            function setInt() {
+                $('#btnLeft,#btnRight,.page a').mouseout(function () {
+                    int = setInterval(autoshow, 3000);
+                })
+            }
+            clearInt();
+            setInt();
+        })
+    </script>
+    <form id="form1" runat="server">
+    <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true" />
+    <div id="wrapper">
+        <!-- header start -->
+        <!-- header start -->
+        <div id="header">
+            <table style="padding: 0px; margin-right: auto; margin-left: auto; width: 820px;
+                height: 110px;">
+                <tr>
+                    <td>
+                        <table style="width: 115px; height: 130px; margin-bottom: 25px;">
+                            <tr>
+                                <td>
+                                    <a href="../index.aspx">
+                                        <img src="../Images/m1（）.jpg" alt="" title="" /></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="../index.aspx">
+                                        <img src="../Images/m2（）.jpg" alt="" border="0" style="margin-bottom: 0px" /></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="Main/WebLink.aspx">
+                                        <img src="../Images/m3（）.jpg" alt="" align="middle" /></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>
+                        <table style="margin: 0px auto 0px auto; padding: 0px; width: 715px">
+                            <tr>
+                                <td>
+                                    <a href="../index.aspx">
+                                        <img src="../Images/6（）.jpg" alt="" style="margin-right: 0px; margin-left: 0px; height: 112px;
+                                            width: 330px; margin-bottom: 25px;" />
+                                    </a>
+                                </td>
+                                <td style="padding: 0px; bottom: 0px">
+                                    <div id="clock" class="light">
+                                        <div class="display">
+                                            <div class="weekdays">
+                                            </div>
+                                            <div class="ampm">
+                                            </div>
+                                            <div class="digits">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <div style="width: 840px">
+                <img src="../Images/frame.png" style="width: 140px" /><img src="../Images/frame.png"
+                    style="width: 140px" /><img src="../Images/frame.png" style="width: 140px" /><img
+                        src="../Images/frame.png" style="width: 140px" /><img src="../Images/frame.png" style="width: 140px" /><img
+                            src="../Images/frame.png" style="width: 140px" /></div>
+            <div style="font-size: large; font-weight: normal; color: #0000FF; clear: both; text-align: center">
+                <p>
+                    欢 迎 加 入 电 脑 爱 好 者 家 园
+                </p>
+            </div>
+        </div>
+        <!-- header end -->
+        <!-- global_nav start -->
+        <div id="global_navi">
+            <a href="">
+                <asp:Menu ID="Menu1" runat="server" DataSourceID="SiteMapDataSource1"
+                    Orientation="Horizontal" StaticDisplayLevels="2" Width="830px">
+                    <DynamicItemTemplate>
+                        <%# Eval("Text") %>
+                    </DynamicItemTemplate>
+                    <Items>
+                        <asp:MenuItem Text="新建项" Value="新建项"></asp:MenuItem>
+                        <asp:MenuItem Text="新建项" Value="新建项"></asp:MenuItem>
+                        <asp:MenuItem Text="新建项" Value="新建项"></asp:MenuItem>
+                        <asp:MenuItem Text="新建项" Value="新建项"></asp:MenuItem>
+                        <asp:MenuItem Text="新建项" Value="新建项"></asp:MenuItem>
+                        <asp:MenuItem Text="新建项" Value="新建项"></asp:MenuItem>
+                    </Items>
+                </asp:Menu>
+                <asp:SiteMapDataSource ID="SiteMapDataSource1" runat="server" />
+            </a>
+        </div>
+        <!-- global_nav end -->
+        <!-- pankuzu start -->
+        <div id="pagetop">
+            <asp:LoginView ID="LoginView1" runat="server">
+                <AnonymousTemplate>
+                    <div id="loginview">
+                        您尚未登录</div>
+                </AnonymousTemplate>
+                <LoggedInTemplate>
+                    <div id="loginview">
+                        欢迎<asp:LoginName ID="LoginName1" runat="server" />
+                        的登录 请按这里<asp:LoginStatus ID="LoginStatus1" runat="server" />
+                    </div>
+                </LoggedInTemplate>
+            </asp:LoginView>
+        </div>
+        <div id="pankuzu">
+            <p>
+                <asp:SiteMapPath ID="SiteMapPath1" runat="server" Font-Names="Verdana" Font-Size="Medium"
+                    PathSeparator=" : ">
+                    <CurrentNodeStyle ForeColor="#333333" />
+                    <NodeStyle Font-Bold="True" ForeColor="#284E98" />
+                    <PathSeparatorStyle Font-Bold="True" ForeColor="#507CD1" />
+                    <RootNodeStyle Font-Bold="True" ForeColor="#507CD1" />
+                </asp:SiteMapPath>
+            </p>
+        </div>
+        <!-- pankuzu end -->
+        <!-- main start -->
+        <div id="main">
+            <div id="main_side1">
+                <div class="side_menu1">
+                    <div id="main1">
+                        <a class="btnLeft" id="btnLeft" href="javascript:void(0);"></a><a class="btnRight"
+                            id="btnRight" href="javascript:void(0);"></a>
+                        <div class="box">
+                            <img style="opacity: 1; filter: alpha(opacity=100);" 
+                                src="../Images/cfaner/IMG_20141026_164021.jpg" alt="" />
+                            <img src="../Images/cfaner/IMG_20141026_210957.jpg" alt="" />
+                            <img src="../Images/cfaner/psb.jpg" alt="" />
+                        </div>
+                        <div class="page">
+                            <a class="active" href="javascript:void(0);">1</a> <a href="javascript:void(0);">2</a>
+                            <a href="javascript:void(0);">3</a>
+                        </div>
+                    </div>
+                    <script src="../js/jquery.min1.js"></script>
+                    <script src="../js/moment.min.js"></script>
+                    <script src="../assets/js/script.js"></script>
+                    <div style="margin-bottom: 20px">
+                        <asp:Login ID="Log_Master" runat="server" BackColor="#EFF3FB" BorderColor="#B5C7DE"
+                            BorderPadding="4" BorderStyle="Solid" BorderWidth="1px" Font-Names="Verdana"
+                            Font-Size="Medium" ForeColor="#333333" Height="100px" Width="309px" VisibleWhenLoggedIn="False">
+                            <InstructionTextStyle Font-Italic="True" ForeColor="Black" />
+                            <LayoutTemplate>
+                                <table cellpadding="4" cellspacing="0" style="border-collapse: collapse;">
+                                    <tr>
+                                        <td>
+                                            <table cellpadding="0" style="height: 100px; width: 309px;">
+                                                <tr>
+                                                    <td align="center" colspan="2" style="color: White; background-color: #507CD1; font-size: 0.9em;
+                                                        font-weight: bold;" class="style1">
+                                                        登录
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="right">
+                                                        <asp:Label ID="UserNameLabel" runat="server" AssociatedControlID="UserName">用户名:</asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:TextBox ID="UserName" runat="server" Font-Size="0.8em"></asp:TextBox>
+                                                        <asp:RequiredFieldValidator ID="UserNameRequired" runat="server" ControlToValidate="UserName"
+                                                            ErrorMessage="必须填写“用户名”。" ToolTip="必须填写“用户名”。" ValidationGroup="ctl00$Login1">*</asp:RequiredFieldValidator>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="right">
+                                                        <asp:Label ID="PasswordLabel" runat="server" AssociatedControlID="Password">密码:</asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:TextBox ID="Password" runat="server" Font-Size="0.8em" TextMode="Password"></asp:TextBox>
+                                                        <asp:RequiredFieldValidator ID="PasswordRequired" runat="server" ControlToValidate="Password"
+                                                            ErrorMessage="必须填写“密码”。" ToolTip="必须填写“密码”。" ValidationGroup="ctl00$Login1">*</asp:RequiredFieldValidator>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <asp:CheckBox ID="RememberMe" runat="server" Text="下次记住我。" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" colspan="2" style="color: Red;">
+                                                        <asp:Literal ID="FailureText" runat="server" EnableViewState="False"></asp:Literal>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="right" colspan="2">
+                                                        <asp:Button ID="LoginButton" runat="server" BackColor="White" BorderColor="#507CD1"
+                                                            BorderStyle="Solid" BorderWidth="1px" CommandName="Login" Font-Names="Verdana"
+                                                            Font-Size="0.8em" ForeColor="#284E98" Text="登录" ValidationGroup="ctl00$Login1"
+                                                            Width="100px" />
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </LayoutTemplate>
+                            <LoginButtonStyle BackColor="White" BorderColor="#507CD1" BorderStyle="Solid" BorderWidth="1px"
+                                Font-Names="Verdana" Font-Size="0.8em" ForeColor="#284E98" />
+                            <TextBoxStyle Font-Size="0.8em" />
+                            <TitleTextStyle BackColor="#507CD1" Font-Bold="True" Font-Size="0.9em" ForeColor="White" />
+                        </asp:Login>
+                    </div>
+                </div>
+            </div>
+            <div id="main_contents1">
+                <div id="contents_body">
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                    </asp:ContentPlaceHolder>
+                </div>
+            </div>
+        </div>
+        <!-- main end -->
+    </div>
+    <!-- wrapper end -->
+    <div id="footer">
+        <address>
+            Copyright (C) 电脑爱好者家园 All Rights Reserved.</address>
+    </div>
+    <!-- footer end -->
+    </form>
+</body>
+</html>

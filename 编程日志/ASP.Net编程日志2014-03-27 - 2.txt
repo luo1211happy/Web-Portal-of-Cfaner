@@ -1,0 +1,21 @@
+asp.net点击一个按钮，使页面跳转到本面页上的指定位置
+
+1.在aspx中添加一个javascript：
+        <script language="javascript" type="text/javascript">
+        <!--
+     
+        function autoclick()
+        {
+            lnk = document.getElementById("auto");
+            lnk.click();                       
+        }
+        // -->
+    </script>
+2.在aspx中，form标记之前加入以下代码：
+     <!--下面一行完成网页定位-->
+    <a id="auto" href="#bookmark"></a>
+3.在需要跳转到的位置，加入以下代码：
+ <a id/name="bookmark"></a>
+4.在按钮的后台代码中加入以下调用：
+  ClientScript.RegisterStartupScript(ClientScript.GetType(), "myscript", "<script>autoclick();</script>")
+5.搞定，试试看。

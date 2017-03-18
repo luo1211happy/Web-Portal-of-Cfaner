@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+    <siteMapNode title="首页" description="Home" url="~/index.aspx" >
+        <siteMapNode title="家园介绍" description=""
+              url="~/Introduction/Introduction.aspx">
+        </siteMapNode>
+        <siteMapNode title="会员专区" description=""
+            url="">
+            <siteMapNode title="会员登入" description=""
+                url="~/Main/Login.aspx" />
+            <siteMapNode title="加入会员" description=""
+                url="~/Main/Login_NewUser.aspx" />
+            <siteMapNode title="修改会员资料" description=""
+                url="~/Member/Mem_Edit.aspx" />
+            <siteMapNode title="变更密码" description=""
+                url="~/Member/Mem_ChangePwd.aspx" />
+            <siteMapNode title="忘记密码" description=""
+                url="~/Main/Login_GetPwd.aspx" />
+        </siteMapNode>
+        <siteMapNode title="新闻公告区" description=""
+              url="~/Main/News.aspx">
+        </siteMapNode>
+        <siteMapNode title="讨论区" description=""
+             url="">
+            <siteMapNode title="讨论区主画面" description=""
+                url="~/Main/Forum.aspx" />
+            <siteMapNode title="发表新主题" description=""
+                url="~/Member/ForumPost.aspx" />
+        </siteMapNode>
+        <siteMapNode title="下载" description=""
+           url="~/Main/Download.aspx">
+        </siteMapNode>
+        <siteMapNode title="管理者系统" description="" url="~/Admin/admin.aspx"/>
+    </siteMapNode>
+</siteMap>

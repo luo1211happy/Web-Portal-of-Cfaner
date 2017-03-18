@@ -1,0 +1,7 @@
+如何将Sqldatasource捆绑到DataList 中用来分页的Pagedatasource中（将其转换为Dataview 再变 DataTable）
+
+Dim dv As DataView = New DataView()
+Dim dt As New DataTable
+
+dv = Me.sqldsData.Select(DataSourceSelectArguments.Empty)
+dt = dv.ToTable()

@@ -1,0 +1,8 @@
+下拉菜单不被滚屏遮盖问题解决
+z-index和父标签(或者祖先)的position属性有关，比如a为下拉菜单的父标签，b为banner的父标签，a和b属于兄弟关系，
+关系如下：
+a > 下拉菜单
+b > banner 滑动屏幕
+此时这样设置css可以解决a下的元素被b下的banner遮罩的问题
+a{position:relative;z-index:2}
+b{position:relative;z-index:1}

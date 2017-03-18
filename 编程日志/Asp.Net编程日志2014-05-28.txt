@@ -1,0 +1,35 @@
+使用FormView控制FileUpload上传防止误操作
+1，之前使用Button_Click事件来监听上传事件，即点击Button后来判断FileUpload是否有文件，但是这样一来容易产生误操作，可能还没有上传文件就已经插入了，导致数据库为空，二来点击过后页面就会刷新，FileUpload里的物理路径就会消失，无法判断是没写还是不见了，这里我提供一种本人寻找的方法
+2，首先进入Formview控件的模板编辑，进入InsertItemTemplate，拖入FileUpload控件（之后的EditItemTemplate如法炮制）
+双击插入按钮，进入InsertButton_Click事件写入以下代码
+Protected Sub InsertButton_Click(ByVal sender As Object, ByVal e As System.EventArgs)
+        Dim SaveFile, FileName, FileExit As String
+        If CType(FormView1.FindControl("DownloadNameTextBox"), TextBox).Text.Trim = "" Then
+            Response.Write("<script>alert('文档名称为空!')</script>")
+            '检查FileUpload2有没有文件
+        ElseIf CType(FormView1.FindControl("FileUpload2"), FileUpload).HasFile Then
+            '获取当前文档的扩展名
+            FileExit = System.IO.Path.GetExtension(CType(FormView1.FindControl("FileUpload2"), FileUpload).FileName)
+            '拼接文档名称
+            FileName = CType(FormView1.FindControl("DownloadNameTextBox"), TextBox).Text & FileExit
+            '将文档全称保留下来，用来存入数据库
+            CType(FormView1.FindControl("DownloadTypeTextBox"), TextBox).Text = FileName
+            '添加文档上传路径
+            SaveFile = Server.MapPath("../Images/files/") & FileName
+            ' 存储当前文档
+            CType(FormView1.FindControl("FileUpload2"), FileUpload).SaveAs(SaveFile)
+            Response.Write("<script>alert('上传成功!')</script>")
+        End If
+    End Sub
+第一次判断文本是否为空
+3，使用FormView1_ItemInserting再次判断
+Protected Sub FormView1_ItemInserting(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.FormViewInsertEventArgs) Handles FormView1.ItemInserting
+        If CType(FormView1.FindControl("FileUpload2"), FileUpload).HasFile = False Then
+            Response.Write("<script>alert('没有上传文件!')</script>")
+            e.Cancel = True
+        End If
+    End Sub
+ItemInserting是在插入过程中进行判断
+4，使用两次判断的好处是，如果使用Button_Click事件来监听的话，点击Button后页面就会刷新，FileUpload的地址就会消失，但是文件已经上传上去了，这时再进行判断的话，会报错，但是不用检测错误的话又担心使用误操作，所以使用双向检测。
+5，也可以才添加一个事件比如一开始设置CType(FormView1.FindControl("FileUpload2"), FileUpload).Visible =True,然后Button_Click事件过后，让FileUpload消失，接着再判断
+CType(FormView1.FindControl("FileUpload2"), FileUpload).Visible =True And CType(FormView1.FindControl("FileUpload2"), FileUpload).HasFile = False 通过与事件进行判断，这样即便刷新过后也是可以进行判断的。

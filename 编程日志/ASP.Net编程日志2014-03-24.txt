@@ -1,0 +1,2 @@
+1.html文件后缀直接可以改成aspx
+2.所有asp控件必须放在runat=server 的form表单内否则不能运行。

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Advertisements>
+    <Ad>
+        <ImageUrl>Images/jiaowuchu.jpg</ImageUrl>
+        <NavigateUrl>http://jwc.nedu.edu.cn/</NavigateUrl>
+        <AlternateText>东北电力大学教务处</AlternateText>
+        <Impressions>1</Impressions>
+    </Ad>
+    <Ad>
+        <ImageUrl>Images/library.jpg</ImageUrl>
+        <NavigateUrl>http://lib.nedu.edu.cn/</NavigateUrl>
+        <AlternateText>东北电力大学图书馆</AlternateText>
+        <Impressions>2</Impressions>
+    </Ad>
+    <Ad>
+        <ImageUrl>Images/northest dianli.jpg</ImageUrl>
+        <NavigateUrl>http://www.nedu.edu.cn/</NavigateUrl>
+        <AlternateText>东北电力大学</AlternateText>
+        <Impressions>3</Impressions>
+    </Ad>
+</Advertisements>

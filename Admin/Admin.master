@@ -1,0 +1,95 @@
+﻿<%@ master language="VB" inherits="Admin, App_Web_jgc2ijq0" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <link rel="stylesheet" type="text/css" href="../css/base.css" />
+    <link rel="stylesheet" type="text/css" href="../css/text.css" />
+</head>
+<body>
+    <form id="form1" runat="server">
+    <asp:ScriptManager ID="ScriptManager1" runat="server" />
+    <div id="wrapper">
+<!-- header start -->
+       <div id="header">
+            <div id="header_left">
+                <h1 id="logo">电脑爱好者家园</h1>
+            </div>
+            <div id="header_right">
+                <div id="unavi_body">
+                    <div id="unavi_body_btm">
+                        <ul>
+                            <li><a href="../index.aspx">回到首頁</a></li>
+                            <li><a href="">网站导览</a></li>
+                            <li><a href="../Main/WebLink.aspx">其他链接</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- header end -->
+        <!-- global_nav start -->
+        <div id="global_navi">         
+            <a href="">
+                <asp:Menu ID="Menu2" runat="server" 
+                DataSourceID="SiteMapDataSource1" Orientation="Horizontal" 
+                StaticDisplayLevels="2" Width="830px">
+                    <DynamicItemTemplate>
+                        <%# Eval("Text") %>
+                    </DynamicItemTemplate>
+                    <Items>
+                        <asp:MenuItem Text="电脑爱好者家园介绍" Value="电脑爱好者家园介绍"></asp:MenuItem>
+                        <asp:MenuItem Text="会员专区" Value="会员专区">
+                            <asp:MenuItem Text="会员登录" Value="会员登录"></asp:MenuItem>
+                            <asp:MenuItem Text="加入会员" Value="加入会员"></asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem Text="留言板" Value="留言板">
+                            <asp:MenuItem Text="留言板主画面" Value="留言板主画面"></asp:MenuItem>
+                            <asp:MenuItem Text="新增留言" Value="新增留言"></asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem Text="新闻公告区" Value="新闻公告区"></asp:MenuItem>
+                        <asp:MenuItem Text="讨论区" Value="讨论区" NavigateUrl="~/Admin/admin.aspx">
+                            <asp:MenuItem Text="讨论区主画面" Value="讨论区主画面"></asp:MenuItem>
+                            <asp:MenuItem Text="主题与回应" Value="主题与回应"></asp:MenuItem>
+                            <asp:MenuItem Text="发表新主题" Value="发表新主题"></asp:MenuItem>
+                            <asp:MenuItem Text="回应主题" Value="回应主题"></asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem Selected="True" Text="管理者系统" Value="管理者系统"></asp:MenuItem>
+                    </Items>
+                </asp:Menu>
+            <asp:SiteMapDataSource ID="SiteMapDataSource1" runat="server" />
+            </a>          
+        </div>
+        <!-- global_nav end -->
+        <!-- pankuzu start -->
+        <div id="pagetop"><asp:LoginView ID="LoginView1" runat="server">
+                        <AnonymousTemplate>
+                            <div id="loginview">您尚未登录</div>
+                        </AnonymousTemplate>
+                        <LoggedInTemplate>
+                            <div id="loginview">欢迎<asp:LoginName ID="LoginName1" runat="server" /> 的登录 请按这里<asp:LoginStatus ID="LoginStatus1" runat="server" /></div>
+                        </LoggedInTemplate>
+                        </asp:LoginView></div>
+        <!-- pankuzu end -->
+        <!-- main start -->
+        <div id="main_contents" class="lnone">
+            <div id="contents_body">
+                <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        
+                </asp:ContentPlaceHolder>
+            </div>
+        </div>
+        <!-- main end -->
+    </div>
+    <!-- wrapper end -->
+    <div id="footer" style="background-color: #0033CC">
+        <address>Copyright (C) 电脑爱好者家园 All Rights Reserved.</address>
+    </div>
+    <!-- footer end -->
+    </form>
+</body>
+</html>

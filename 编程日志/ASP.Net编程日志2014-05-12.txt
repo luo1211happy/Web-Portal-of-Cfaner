@@ -1,0 +1,22 @@
+如何使用Profile提取用户信息
+由于用的是windows验证方式，用户信息存储在profile中，想了很久才做到了用户信息提取
+1，使用GridView连接数据库，得到用户名。
+2，由于profile中也有用户名，通过它来确定要找的用户名
+3，Dim SelectedProfile As ProfileCommon
+  SelectedProfile = 	Profile.GetProfile(GridView6.Rows	(GridView6.SelectedIndex).Cells	(1).Text)
+提取Gridview中用户名传值给profile.GetProfile确定profile
+4，使用Formview显示查询的值（alert！！！记住一定要是Formview连接数据源，然后再用TemplateField自定义要显示的字段，否则会显示“未能将对象引用到实例”当时不知道实在是浪费了不少时间解决问题）
+<asp:TemplateField  HeaderText ="用户名称">
+<ItemTemplate >
+<asp:Label runat ="server" ID ="UserName"></asp:Label>
+</ItemTemplate>
+5将用户信息提取显示
+CType(DetailsView1.FindControl("UserName"), Label).Text = SelectedProfile.UserName
+        CType(DetailsView1.FindControl("UserNickName"), Label).Text = SelectedProfile.UserName
+        CType(DetailsView1.FindControl("UserSex"), Label).Text = SelectedProfile.UserSex
+        CType(DetailsView1.FindControl("UserBirth"), Label).Text = SelectedProfile.UserBirth
+        CType(DetailsView1.FindControl("UserPhone"), Label).Text = SelectedProfile.UserPhone
+        CType(DetailsView1.FindControl("UserMobile"), Label).Text = SelectedProfile.UserMobile
+        CType(DetailsView1.FindControl("Country"), Label).Text = SelectedProfile.UserAddress.Country
+        CType(DetailsView1.FindControl("City"), Label).Text = SelectedProfile.UserAddress.City
+        CType(DetailsView1.FindControl("Detail"), Label).Text = SelectedProfile.UserAddress.Detail

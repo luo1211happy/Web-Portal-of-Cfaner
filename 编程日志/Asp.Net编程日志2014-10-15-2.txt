@@ -1,0 +1,49 @@
+使用DataList横向排列数据
+一、着重是RepeatColumns="4" RepeatDirection="Horizontal" ItemStyle-Width="50%" Width="100%"，控制循环列数以及方向，同时规定好单列宽度，既不过大也不过小。
+二、为了不破坏原有版式，需要用ItemTemplate，HeaderTemplate，FooterTemplate拼接div块以达到原有版式
+三、活用DataList ItemStyle属性，可以用来调整宽度，对象对齐方式。
+<div class="content-we-are" id="team">
+            <div class="container">
+                <div class="content-we">
+                    <h2>
+                        <span class="we-are"></span>our family.</h2>
+                </div>
+                <asp:DataList ID="DataList1" runat="server" DataKeyField="member_ID" DataSourceID="SqlDataSource1"
+                    RepeatColumns="4" RepeatDirection="Horizontal" ItemStyle-Width="50px" Width="100%"
+                    CellPadding="0">
+                    <HeaderTemplate>
+                        <div class="container">
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        <div class="col-md-3">
+                            <div class="image-matter">
+                                <asp:Image ID="Image1" runat="server" Visible='<%# Eval("member_Image").ToString().Length > 0 %>'
+                                    ImageUrl='<%# "../Introduction/images/members/"&Eval("member_Image") %>' Width="250px"
+                                    Height="295px" />
+                                <div class="image-bro">
+                                    <h4>
+                                        <asp:Label ID="Label1" runat="server" Text='<%# Eval("member_Name") %>' /></h4>
+                                    <p>
+                                        <asp:Label ID="Label2" runat="server" Text='<%# Eval("member_Job") %>' /></p>
+                                </div>
+                                <ul class="img-social-stags">
+                                    <li><p>班级：</p><span><asp:Label ID="Label3" runat="server" Text='<%# Eval("member_Class") %>' /></span></a>
+                                        <li>
+                                            <li><p>寝室：</p><span><asp:Label ID="Label4" runat="server" Text='<%# Eval("member_Dorm") %>' /></span></a>
+                                                <li>
+                                                    <li><p>电话：</p><span><asp:Label ID="Label5" runat="server" Text='<%# Eval("member_Tel") %>' /></span></a>
+                                                        <li>
+                                                            <div class="clearfix">
+                                                            </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </ItemTemplate>
+                    <FooterTemplate>
+                        </div>
+                    </FooterTemplate>
+                </asp:DataList>
+                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:WebSiteDB %>"
+                    SelectCommand="SELECT * FROM [members]"></asp:SqlDataSource>
+            </div>
+        </div>

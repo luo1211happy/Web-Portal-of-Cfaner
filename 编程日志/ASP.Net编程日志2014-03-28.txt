@@ -1,0 +1,47 @@
+怎样自定义时间显示
+首先数据库中，记入时间都是年月日时分秒那么我们如果要自己定义计算机获取当前时间需要写入一下代码：
+//获取日期+时间
+DateTime.Now.ToString();            // 2008-9-4 20:02:10
+DateTime.Now.ToLocalTime().ToString();        // 2008-9-4 20:12:12
+
+//获取日期
+DateTime.Now.ToLongDateString().ToString();    // 2008年9月4日
+DateTime.Now.ToShortDateString().ToString();    // 2008-9-4
+DateTime.Now.ToString("yyyy-MM-dd");        // 2008-09-04
+DateTime.Now.Date.ToString();            // 2008-9-4 0:00:00
+//获取时间
+DateTime.Now.ToLongTimeString().ToString();   // 20:16:16
+DateTime.Now.ToShortTimeString().ToString();   // 20:16
+DateTime.Now.ToString("hh:mm:ss");        // 08:05:57
+DateTime.Now.TimeOfDay.ToString();        // 20:33:50.7187500
+
+//其他
+DateTime.ToFileTime().ToString();       // 128650040212500000
+DateTime.Now.ToFileTimeUtc().ToString();   // 128650040772968750
+DateTime.Now.ToOADate().ToString();       // 39695.8461709606
+DateTime.Now.ToUniversalTime().ToString();   // 2008-9-4 12:19:14
+
+DateTime.Now.Year.ToString();          获取年份   // 2008
+DateTime.Now.Month.ToString();      获取月份   // 9
+DateTime.Now.DayOfWeek.ToString(); 获取星期   // Thursday
+DateTime.Now.DayOfYear.ToString(); 获取第几天   // 248
+DateTime.Now.Hour.ToString();          获取小时   // 20
+DateTime.Now.Minute.ToString();     获取分钟   // 31
+DateTime.Now.Second.ToString();     获取秒数   // 45
+
+//n为一个数,可以数整数,也可以事小数
+dt.AddYears(n).ToString();   //时间加n年
+dt.AddDays(n).ToString();   //加n天
+dt.AddHours(n).ToString();   //加n小时
+dt.AddMonths(n).ToString();   //加n个月
+dt.AddSeconds(n).ToString();   //加n秒
+dt.AddMinutes(n).ToString();   //加n分
+
+其次我们要从数据库中读取时间数据，利用formview等数据控件会得到数据库的东西，这时我们需要做一下数据读取的修改，如下：
+<%#Eval("diaryTime", "{0:yyyy年MM月dd日 HH:mm:ss}")%>
+ 或者
+<%# Eval("diaryTime").ToString("yyyy-mm-dd hh:mm")%>
+其他像<%# Bind("diaryTime")>之类的以此类推
+
+<asp:BoundField DataField="news_Date" DataFormatString="{0:d}" 
+                                            SortExpression="news_Date">
